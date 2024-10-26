@@ -11,33 +11,37 @@
   > Для пользовательского html можно использовать пример в [каталоге](html/) с ДЗ.
   
  
-## Задание 2  
-Создайте контейнер для REST API сервера из решения ДЗ по теме «Flask»
+#### Создать Docker образ
 
-1. Создайте типовой Docker-файл для запуска Python-приложения
-2. Проверьте конфигурацию Flask на использование переменных окружения (environment)
-3. Проверьте Docker-файл на передачу переменных окружения в Flask
-4. Docker-контейнер запускается с приложением Flask
+```bash
+docker build . -t task1_nginx
+```
 
-<details><summary>Подсказки: </summary>  
-  1. Хорошим тоном будет пример команд с последовательным запуском контейнеров и объединением их в сеть для БД и Flask.  
-  2. В качестве простого решения можно подключаться к БД на локальной хост машине.  
-</details>  
 
-- Приложите в репозиторий Dockerfile и файлы приложения.  
-- В Readme.md описать типовые команды для запуска контейнера c backend сервером.  
-      
-## Задание 3 *(не обязательное)
- Создать конфигурацию для последовательного запуска 3-х контейнеров: flask, postgres, nginx.  
- Контейнеры объединяются в сеть, которые работают в связке:
- - Nginx работает в качестве proxy-http для пересылки динамических запросов к Flask или возвращая статические html файлы.  
- - PostgreSQL запускается до Flask, т.к. rest api может зависетьот БД.  
- - Flask запускается через Gunicorn, отвечая http клиенту через Nginx.
- 
- В Readme.md перечислить команды для запуска или описать конфигурацию `docker-compose.yml` для запуска одной командой.
- 
- Полезные материалы для Задания 3:
- - [Введение в docker-compose](https://dker.ru/docs/docker-compose/getting-started/) 
- - https://the-bosha.ru/2017/01/04/zapusk-flask-prilozheniia-c-uwsgi-virtualenv-i-nginx/
- - https://habr.com/ru/post/352266/  `Темы Настройка Gunicorn и Supervisor` и `Настройка Nginx`
- - https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-18-04-ru   
+#### Запустить Ducker контейнер:
+
+```bash
+docker run --name nginx -d -p 8888:80 task1_nginx
+```
+
+
+#### Созданные образы
+
+```bash
+docker image ls
+```
+
+
+
+#### Запущенные контейнеры
+
+```bash
+docker ps
+```
+
+
+#### Проверка содержимого
+
+```bash
+curl localhost:8888/
+```
